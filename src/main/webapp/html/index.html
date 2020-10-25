@@ -1,13 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Bulat
-  Date: 10/25/2020
-  Time: 2:25 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>What`s`film - главная страница</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
@@ -53,13 +47,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="signInModalLabel">Please, Sign In:</h5>
+                <h5 class="modal-title" id="signInModalLabel">Sign In:</h5>
                 <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
             </div>
             <form action="">
                 <div class="modal-body">
                     <div class="row mb-3">
-                        <label for="inputEmailSignIn" class="col-sm-4 col-form-label">Email</label>
+                        <label for="inputEmailSignIn" class="col-sm-4 col-form-label">Email or Username</label>
                         <div class="col-sm-10">
                             <input type="email" class="form-control" id="inputEmailSignIn" required>
                         </div>
@@ -84,27 +78,39 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="signUpModalLabel">Please, Sign Up:</h5>
+                <h5 class="modal-title" id="signUpModalLabel">Sign Up:</h5>
                 <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
             </div>
             <form action="">
                 <div class="modal-body">
                     <div class="row mb-3">
+                        <label for="inputUsernameSignUp" class="col-sm-4 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputUsernameSignUp" name="username" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <label for="inputEmailSignUp" class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmailSignUp" required>
+                            <input type="email" class="form-control" id="inputEmailSignUp" name="email" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputPasswordSignUp" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordSignUp" required>
+                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputPasswordRepeatSignUp" class="col-sm-4 col-form-label">Repeat Password</label>
                         <div class="col-sm-10">
                             <input type="password" class="form-control" id="inputPasswordRepeatSignUp" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputAgeSignUp" class="col-sm-4 col-form-label">Date of Birth</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="inputAgeSignUp" name="age" required>
                         </div>
                     </div>
                     <fileldset>

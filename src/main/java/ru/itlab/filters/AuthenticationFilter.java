@@ -14,11 +14,12 @@ public class AuthenticationFilter implements Filter {
 
     private UsersService usersService;
 
-
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         // преобразуем запросы к нужному виду
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -52,6 +53,7 @@ public class AuthenticationFilter implements Filter {
 
     }
 
+    @Override
     public void destroy() {
 
     }

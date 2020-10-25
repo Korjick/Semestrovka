@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.Builder;
 import lombok.ToString;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -13,7 +15,8 @@ import lombok.ToString;
 @ToString
 public class User {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private Integer age;
+    private String username;
+    private String email;
+    private Date dateOfBirth;
+    private String hashPassword;
 }
