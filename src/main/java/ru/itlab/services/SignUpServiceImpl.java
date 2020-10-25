@@ -26,6 +26,5 @@ public class SignUpServiceImpl implements SignUpService {
                 .build();
 
         usersRepository.save(user);
-        System.out.println(user);
     }
 }

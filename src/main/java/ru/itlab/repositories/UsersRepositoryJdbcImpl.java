@@ -20,7 +20,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     public void save(User entity) {
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet generatedKeys = null;
 
         try {
             connection = dataSource.getConnection();
@@ -35,19 +34,17 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                 throw new SQLException("Problem with insert user");
             }
 
-            generatedKeys = statement.getGeneratedKeys();
-
-            if (generatedKeys.next()) {
-                entity.setId(generatedKeys.getLong("id"));
-            } else {
-                throw new SQLException("Problem with retrieve id");
+            try(ResultSet generatedKeys = statement.getGeneratedKeys()){
+                if (generatedKeys.next()) {
+                    entity.setId(generatedKeys.getLong("id"));
+                } else {
+                    throw new SQLException("Problem with retrieve id");
+                }
             }
-
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         } finally {
             try{
-                if(generatedKeys != null) generatedKeys.close();
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (SQLException throwables) {}
