@@ -3,8 +3,7 @@ package ru.itlab.listeners;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import ru.itlab.repositories.UsersRepository;
 import ru.itlab.repositories.UsersRepositoryJdbcImpl;
-import ru.itlab.services.SignUpService;
-import ru.itlab.services.SignUpServiceImpl;
+import ru.itlab.services.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -27,8 +26,11 @@ public class CustomServletContextListener implements ServletContextListener {
 
         UsersRepository usersRepository = new UsersRepositoryJdbcImpl(dataSource);
         SignUpService signUpService = new SignUpServiceImpl(usersRepository);
+        SignInService signInService = new SignInServiceImpl(usersRepository);
+        UsersService usersService = new UsersServiceImpl(usersRepository);
 
         servletContext.setAttribute("signUpService", signUpService);
+        servletContext.setAttribute("signInService", signInService);
     }
 
     @Override

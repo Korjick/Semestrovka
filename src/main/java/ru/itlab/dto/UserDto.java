@@ -16,5 +16,5 @@ public class UserDto {
     private String username;
     private String email;
     private Date dateOfBirth;
-    private String password;
+    private String hashPassword;
 }

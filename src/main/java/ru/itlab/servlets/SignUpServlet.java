@@ -23,12 +23,18 @@ public class SignUpServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect(request.getContextPath() + "/");
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // TODO: проверить существует ли пользователь с таким же Email
         SignUpForm form = new SignUpForm();
         form.setUsername(request.getParameter("username"));
         form.setEmail(request.getParameter("email"));
 
-        String date = request.getParameter("age");
+        String date = request.getParameter("dateOfBirth");
         int day = Integer.parseInt(date.split("-")[2]);
         int month = Integer.parseInt(date.split("-")[1]);
         int year = Integer.parseInt(date.split("-")[0]);
@@ -38,7 +44,7 @@ public class SignUpServlet extends HttpServlet {
 
         signUpService.signUp(form);
 
-        response.sendRedirect("/signIn");
+        response.sendRedirect(getServletContext() + "/signIn");
     }
 }
 

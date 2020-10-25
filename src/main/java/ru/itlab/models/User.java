@@ -19,4 +19,6 @@ public class User {
     private String email;
     private Date dateOfBirth;
     private String hashPassword;
+
+    //TODO: функция смена пароля
 }
