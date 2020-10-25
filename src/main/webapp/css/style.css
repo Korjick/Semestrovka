@@ -42,12 +42,12 @@ body {
         height: 400px;
     }
     #filmRecommendationPrevious{
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
     #filmRecommendationNext{
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
     }
 }
 

@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<%--
+  Created by IntelliJ IDEA.
+  User: Bulat
+  Date: 10/25/2020
+  Time: 2:25 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>What`s`film - главная страница</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
 <!-- Navigation Menu -->
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #000000">
@@ -128,39 +133,37 @@
 
 <main>
     <img id="mainPicture" class="d-block w-100" src="../img/sliderOnly.jpg" alt="">
-    <div id="filmRecommendation" class="container-liquid">
-        <div id="filmRecommendationMenu" class="row align-items-center">
-            <svg width="100%" viewBox="0 0 16 16" id="filmRecommendationPrevious" class="bi bi-chevron-left col-1" fill="#eeeeee"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
-            <div id="filmRecommendationResult" class="row col-10 d-flex justify-content-between align-items-center">
-                <div id="filmRecommendation1" class="text-center my-2 col-lg-2 col-sm-4">
-                    <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
-                </div>
-                <div id="filmRecommendation2" class="text-center my-2 col-lg-2 col-sm-4">
-                    <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
-                </div>
-                <div id="filmRecommendation3" class="text-center my-2 col-lg-2 col-sm-4">
-                    <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
-                </div>
-                <div id="filmRecommendation4" class="text-center my-2 col-lg-2 col-sm-4">
-                    <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
-                </div>
-                <div id="filmRecommendation5" class="text-center my-2 col-lg-2 col-sm-4">
-                    <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
-                </div>
-                <div id="filmRecommendation6" class="text-center my-2 col-lg-2 col-sm-4">
-                    <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
-                </div>
+    <div id="filmRecommendationMenu" class="row justify-content-center align-items-center">
+        <svg id="filmRecommendationPrevious" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill col-1"
+             fill="#eeeeee" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/>
+        </svg>
+        <div id="filmRecommendationResult" class="row col-10 d-flex justify-content-between align-items-center">
+            <div id="filmRecommendation1" class="text-center my-2 col-lg-2 col-sm-4">
+                <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
             </div>
-            <svg width="100%" viewBox="0 0 16 16" id="filmRecommendationNext" class="bi bi-chevron-right col-1" fill="#eeeeee"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
+            <div id="filmRecommendation2" class="text-center my-2 col-lg-2 col-sm-4">
+                <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
+            </div>
+            <div id="filmRecommendation3" class="text-center my-2 col-lg-2 col-sm-4">
+                <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
+            </div>
+            <div id="filmRecommendation4" class="text-center my-2 col-lg-2 col-sm-4">
+                <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
+            </div>
+            <div id="filmRecommendation5" class="text-center my-2 col-lg-2 col-sm-4">
+                <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
+            </div>
+            <div id="filmRecommendation6" class="text-center my-2 col-lg-2 col-sm-4">
+                <a href=""><img src="../img/sliderOnly.jpg" class="rounded" alt=""></a>
+            </div>
         </div>
+        <svg id="filmRecommendationNext" viewBox="0 0 16 16" class="bi bi-arrow-right-circle-fill col-1"
+             fill="#eeeeee" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-11.5.5a.5.5 0 0 1 0-1h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5z"/>
+        </svg>
     </div>
 </main>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
