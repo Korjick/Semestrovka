@@ -1,0 +1,37 @@
+/* Classes */
+
+body {
+    background-color: black;
+}
+
+/* ID`s */
+
+#mainPicture{
+    filter: brightness(40%);
+}
+
+#filmRecommendationResult img{
+    height: 250px;
+    width: 175px;
+}
+
+/* Medias */
+
+@media (min-width: 576px) {
+    #mainPicture{
+        height: 400px;
+    }
+    #filmRecommendationMenu{
+        height: 800px;
+    }
+}
+
+@media (min-width: 992px) {
+    #mainPicture{
+        height: 800px;
+    }
+    #filmRecommendationMenu{
+        height: 400px;
+    }
+}
+
