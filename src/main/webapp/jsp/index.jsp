@@ -1,7 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<%--
+  Created by IntelliJ IDEA.
+  User: Bulat
+  Date: 10/25/2020
+  Time: 11:47 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>What`s`film - главная страница</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
@@ -50,18 +56,19 @@
                 <h5 class="modal-title" id="signInModalLabel">Sign In:</h5>
                 <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
             </div>
-            <form action="/signIn" method="post">
+            <form action="<%=request.getContextPath()%>/signIn" method="post">
                 <div class="modal-body">
                     <div class="row mb-3">
-                        <label for="inputEmailSignIn" class="col-sm-4 col-form-label">Email or Username</label>
+                        <label for="inputEmailSignIn" class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmailSignIn" name="login" required>
+                            <input type="email" class="form-control" id="inputEmailSignIn" name="email" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputPasswordSignIn" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordSignIn" name="password" required>
+                            <input type="password" class="form-control" id="inputPasswordSignIn" name="password"
+                                   required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-outline-warning my-3">Sign In</button>
@@ -81,7 +88,7 @@
                 <h5 class="modal-title" id="signUpModalLabel">Sign Up:</h5>
                 <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
             </div>
-            <form action="/signUp" method="post">
+            <form action="<%=request.getContextPath()%>/signUp" method="post">
                 <div class="modal-body">
                     <div class="row mb-3">
                         <label for="inputUsernameSignUp" class="col-sm-4 col-form-label">Username</label>
@@ -98,7 +105,8 @@
                     <div class="row mb-3">
                         <label for="inputPasswordSignUp" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password" required>
+                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password"
+                                   required>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -113,18 +121,16 @@
                             <input type="date" class="form-control" id="inputAgeSignUp" name="dateOfBirth" required>
                         </div>
                     </div>
-                    <fileldset>
-                        <div class="row mb-3">
-                            <legend class="col-form-label col-sm-10">I agree to the <a href="">Terms of Service</a>
-                            </legend>
-                            <div class="col-sm-2">
-                                <div class="form-check">
-                                    <input type="checkbox" id="termAcceptedSignUp" class="form-check-input mt-2"
-                                           required>
-                                </div>
+                    <div class="row mb-3">
+                        <legend class="col-form-label col-sm-10">I agree to the <a href="">Terms of Service</a>
+                        </legend>
+                        <div class="col-sm-2">
+                            <div class="form-check">
+                                <input type="checkbox" id="termAcceptedSignUp" class="form-check-input mt-2"
+                                       required>
                             </div>
                         </div>
-                    </fileldset>
+                    </div>
                     <button type="submit" class="btn btn-outline-warning my-3">Sign Up</button>
                 </div>
             </form>

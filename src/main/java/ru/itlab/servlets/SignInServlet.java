@@ -1,16 +1,14 @@
 package ru.itlab.servlets;
 
 import ru.itlab.dto.SignInForm;
-import ru.itlab.dto.SignUpForm;
 import ru.itlab.services.SignInService;
-import ru.itlab.services.SignUpService;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/signIn")
@@ -18,22 +16,28 @@ public class SignInServlet extends HttpServlet {
     private SignInService signInService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         signInService = (SignInService) config.getServletContext().getAttribute("signInService");
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendRedirect(request.getContextPath() + "/");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SignInForm form = new SignInForm();
-        form.setLogin(request.getParameter("login"));
+        form.setEmail(request.getParameter("email"));
         form.setPassword(request.getParameter("password"));
 
-        signInService.signIn(form);
-        response.sendRedirect(getServletContext() + "/");
+        Long id = signInService.signIn(form);
+        if (id != -1) {
+            HttpSession session = request.getSession();
+            session.setAttribute("id", id);
+            response.sendRedirect(getServletContext() + "/profile");
+        } else {
+            response.sendRedirect(getServletContext() + "/");
+        }
     }
 }

@@ -17,14 +17,26 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     @Override
-    public void signUp(SignUpForm form) {
-        User user = User.builder()
-                .username(form.getUsername())
-                .email(form.getEmail())
-                .dateOfBirth(form.getDateOfBirth())
-                .hashPassword(passwordEncoder.encode(form.getPassword()))
-                .build();
+    public Long signUp(SignUpForm form) {
+        String email = form.getEmail();
+        String password = form.getPassword();
 
-        usersRepository.save(user);
+        if(!usersRepository.getUserByEmail(email).isPresent()){
+            if(password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})")){
+                User user = User.builder()
+                        .username(form.getUsername())
+                        .email(form.getEmail())
+                        .dateOfBirth(form.getDateOfBirth())
+                        .hashPassword(passwordEncoder.encode(form.getPassword()))
+                        .build();
+
+                usersRepository.save(user);
+                return user.getId();
+            } else {
+                return (long) -2;
+            }
+        } else {
+            return (long) -1;
+        }
     }
 }

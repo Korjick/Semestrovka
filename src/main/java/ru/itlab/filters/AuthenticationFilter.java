@@ -12,10 +12,8 @@ import java.io.IOException;
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
 
-    private UsersService usersService;
-
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -37,10 +35,10 @@ public class AuthenticationFilter implements Filter {
             }
         }
 
-        if (isAuthenticated && !isLoginPage || !isAuthenticated && isLoginPage) {
+        if (isAuthenticated && !isLoginPage) {
             filterChain.doFilter(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/");
+            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         }
 
     }
