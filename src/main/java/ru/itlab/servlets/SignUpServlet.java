@@ -43,12 +43,13 @@ public class SignUpServlet extends HttpServlet {
 
         // TODO: разобрать коды ошибок
         Long id = signUpService.signUp(form);
-        if (id != -1 && id != -2) {
+        System.out.println(id);
+        if (id > 0) {
             HttpSession session = request.getSession();
             session.setAttribute("id", id);
-            response.sendRedirect(getServletContext() + "/profile");
+            response.sendRedirect(request.getContextPath() + "/profile");
         } else {
-            response.sendRedirect(getServletContext() + "/");
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 }

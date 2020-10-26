@@ -24,10 +24,10 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Optional<UserDto> userDto;
-        if((userDto = usersService.getUserInfo(Long.valueOf(request.getParameter("id")))).isPresent()){
+        if((userDto = usersService.getUserInfo((Long) request.getSession(false).getAttribute("id"))).isPresent()){
             request.getRequestDispatcher("/html/profile.html").forward(request, response);
         } else {
-            response.sendRedirect(getServletContext() + "/");
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 }

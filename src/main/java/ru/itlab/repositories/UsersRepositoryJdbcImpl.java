@@ -13,10 +13,10 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     private DataSource dataSource;
 
-    private final static String SQL_INSERT = "insert into users(username, email, dateOfBirth, hash_password) " +
+    private final static String SQL_INSERT = "insert into users(username, email, dateofbirth, hash_password) " +
             "values (?, ?, ?, ?)";
     private final static String SQL_GET_ALL = "select * from users";
-    private final static String SQL_GET_USER_BY_ID = "select * from users offset ? limit 1";
+    private final static String SQL_GET_USER_BY_ID = "select * from users where id=?";
     private final String SQL_USER_BY_EMAIL = "select * from users where email=?";
 
     public UsersRepositoryJdbcImpl(DataSource dataSource) {
@@ -38,14 +38,6 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
             if (affectedRows == 0) {
                 throw new SQLException("Problem with insert user");
-            }
-
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    entity.setId(generatedKeys.getLong("id"));
-                } else {
-                    throw new SQLException("Problem with retrieve id");
-                }
             }
         } catch (SQLException e) {
             throw new IllegalStateException(e);
@@ -99,7 +91,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
         try {
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(SQL_GET_USER_BY_ID);
-            statement.setString(1, String.valueOf(id));
+            statement.setLong(1, id);
 
             try (ResultSet isUserByID = statement.executeQuery()) {
                 if (isUserByID.next()) {

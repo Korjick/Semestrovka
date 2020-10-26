@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter("*.jsp")
 public class AuthenticationFilter implements Filter {
 
     @Override
@@ -27,20 +27,13 @@ public class AuthenticationFilter implements Filter {
         Boolean sessionExists = session != null;
         Boolean isLoginPage = request.getRequestURI().equals(request.getContextPath() + "/");
 
-        if (sessionExists) {
-            isAuthenticated = (Boolean) session.getAttribute("id");
+        if (sessionExists) isAuthenticated = session.getAttribute("id") != null;
 
-            if (isAuthenticated == null) {
-                isAuthenticated = false;
-            }
-        }
-
-        if (isAuthenticated && !isLoginPage) {
+        if (isAuthenticated && !isLoginPage || !isAuthenticated && isLoginPage) {
             filterChain.doFilter(request, response);
         } else {
-            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/signIn");
         }
-
     }
 
     @Override

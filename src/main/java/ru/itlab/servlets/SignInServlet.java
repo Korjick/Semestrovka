@@ -32,12 +32,12 @@ public class SignInServlet extends HttpServlet {
         form.setPassword(request.getParameter("password"));
 
         Long id = signInService.signIn(form);
-        if (id != -1) {
+        if (id > 0) {
             HttpSession session = request.getSession();
             session.setAttribute("id", id);
-            response.sendRedirect(getServletContext() + "/profile");
+            response.sendRedirect(request.getContextPath() + "/profile");
         } else {
-            response.sendRedirect(getServletContext() + "/");
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 }
