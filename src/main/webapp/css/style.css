@@ -47,6 +47,11 @@ body {
     width: 175px;
 }
 
+#filmModal img {
+    height: 250px;
+    width: 175px;
+}
+
 #filmRecommendationFilter {
     height: 300px;
 }

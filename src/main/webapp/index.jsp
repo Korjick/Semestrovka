@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
     <link rel="stylesheet" href="${contextPath}/css/style.css">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <!-- Navigation Menu -->
@@ -32,7 +33,8 @@
                 <div class="d-flex justify-content-start">
                     <button class="btn btn-outline-light my-3" data-toggle="modal" data-target="#signInModal">Вход
                     </button>
-                    <button class="btn btn-outline-light ml-3 my-3" data-toggle="modal" data-target="#signUpModal">Регистрация
+                    <button class="btn btn-outline-light ml-3 my-3" data-toggle="modal" data-target="#signUpModal">
+                        Регистрация
                     </button>
                 </div>
             </c:if>
@@ -139,6 +141,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="filmModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="#filmModal"></h3>
+                    <h4></h4>
+                </div>
+                <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-5">
+                    <img src="" alt="">
+                </div>
+                <div class="col-7">
+                    <h5></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Main -->
 
 <main>
@@ -155,11 +184,13 @@
                 <!-- Section: Category -->
                 <section class="row col-6 my-3" id="filmRecommendationFilterCategory">
                     <div class="dropright">
-                        <a class="modal-header link-light dropdown-toggle text-decoration-none" href="#" id="categoryDropdownMenuLinkCategory" role="button"
+                        <a class="modal-header link-light dropdown-toggle text-decoration-none" href="#"
+                           id="categoryDropdownMenuLinkCategory" role="button"
                            data-toggle="dropdown" aria-expanded="false">
                             <h5>Категория</h5>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-light col-8 overflow-auto" aria-labelledby="categoryDropdownMenuLinkCategory" style="max-height: 300px;">
+                        <ul class="dropdown-menu dropdown-menu-light col-8 overflow-auto"
+                            aria-labelledby="categoryDropdownMenuLinkCategory" style="max-height: 300px;">
                             <li class="dropdown-item">
                                 <input type="checkbox" class="form-check-input filled-in" id="аниме" value="1750">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
@@ -201,7 +232,8 @@
                                        for="для-взрослых">для взрослых</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="документальный" value="12">
+                                <input type="checkbox" class="form-check-input filled-in" id="документальный"
+                                       value="12">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="документальный">документальный</label>
                             </li>
@@ -231,7 +263,8 @@
                                        for="концерт">концерт</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="короткометражка" value="15">
+                                <input type="checkbox" class="form-check-input filled-in" id="короткометражка"
+                                       value="15">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="короткометражка">короткометражка</label>
                             </li>
@@ -328,18 +361,22 @@
                 <!-- Section: Country -->
                 <section class="row col-6 my-3" id="filmRecommendationFilterCountry">
                     <div class="dropright">
-                        <a class="modal-header link-light dropdown-toggle text-decoration-none" href="#" id="categoryDropdownMenuLinkCountry" role="button"
+                        <a class="modal-header link-light dropdown-toggle text-decoration-none" href="#"
+                           id="categoryDropdownMenuLinkCountry" role="button"
                            data-toggle="dropdown" aria-expanded="false">
                             <h5>Страна</h5>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-light col-8 overflow-auto" aria-labelledby="categoryDropdownMenuLinkCountry" style="max-height: 300px;">
+                        <ul class="dropdown-menu dropdown-menu-light col-8 overflow-auto"
+                            aria-labelledby="categoryDropdownMenuLinkCountry" style="max-height: 300px;">
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Сан-Томе-и-Принсипи" value="1072">
+                                <input type="checkbox" class="form-check-input filled-in" id="Сан-Томе-и-Принсипи"
+                                       value="1072">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Сан-Томе-и-Принсипи">Сан-Томе и Принсипи</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Уоллис-и-Футуна" value="1073">
+                                <input type="checkbox" class="form-check-input filled-in" id="Уоллис-и-Футуна"
+                                       value="1073">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Уоллис-и-Футуна">Уоллис и Футуна</label>
                             </li>
@@ -349,7 +386,8 @@
                                        for="Кот-д’Ивуар">Кот-д’Ивуар</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Фолклендские-острова" value="1075">
+                                <input type="checkbox" class="form-check-input filled-in" id="Фолклендские-острова"
+                                       value="1075">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Фолклендские-острова">Фолклендские острова</label>
                             </li>
@@ -359,17 +397,21 @@
                                        for="Ватикан">Ватикан</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Виргинские-Острова-(Великобритания)" value="1077">
+                                <input type="checkbox" class="form-check-input filled-in"
+                                       id="Виргинские-Острова-(Великобритания)" value="1077">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
-                                       for="Виргинские-Острова-(Великобритания)">Виргинские Острова (Великобритания)</label>
+                                       for="Виргинские-Острова-(Великобритания)">Виргинские Острова
+                                    (Великобритания)</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Северная-Македония" value="1078">
+                                <input type="checkbox" class="form-check-input filled-in" id="Северная-Македония"
+                                       value="1078">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Северная-Македония">Северная Македония</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Сент-Китс-и-Невис" value="1071">
+                                <input type="checkbox" class="form-check-input filled-in" id="Сент-Китс-и-Невис"
+                                       value="1071">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Сент-Китс-и-Невис">Сент-Китс и Невис</label>
                             </li>
@@ -399,12 +441,14 @@
                                        for="Алжир">Алжир</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Виргинские-Острова-(США)" value="1026">
+                                <input type="checkbox" class="form-check-input filled-in" id="Виргинские-Острова-(США)"
+                                       value="1026">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Виргинские-Острова-(США)">Виргинские Острова (США)</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Американское-Самоа" value="1062">
+                                <input type="checkbox" class="form-check-input filled-in" id="Американское-Самоа"
+                                       value="1062">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Американское-Самоа">Американское Самоа</label>
                             </li>
@@ -424,12 +468,14 @@
                                        for="Антарктида">Антарктида</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Антигуа-и-Барбуда" value="1030">
+                                <input type="checkbox" class="form-check-input filled-in" id="Антигуа-и-Барбуда"
+                                       value="1030">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Антигуа-и-Барбуда">Антигуа и Барбуда</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Антильские-Острова" value="1009">
+                                <input type="checkbox" class="form-check-input filled-in" id="Антильские-Острова"
+                                       value="1009">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Антильские-Острова">Антильские Острова</label>
                             </li>
@@ -494,7 +540,8 @@
                                        for="Бенин">Бенин</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Берег-Слоновой-кости" value="109">
+                                <input type="checkbox" class="form-check-input filled-in" id="Берег-Слоновой-кости"
+                                       value="109">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Берег-Слоновой-кости">Берег Слоновой кости</label>
                             </li>
@@ -524,7 +571,8 @@
                                        for="Босния">Босния</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Босния-и-Герцеговина" value="39">
+                                <input type="checkbox" class="form-check-input filled-in" id="Босния-и-Герцеговина"
+                                       value="39">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Босния-и-Герцеговина">Босния и Герцеговина</label>
                             </li>
@@ -539,7 +587,8 @@
                                        for="Бразилия">Бразилия</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Бруней-Даруссалам" value="1066">
+                                <input type="checkbox" class="form-check-input filled-in" id="Бруней-Даруссалам"
+                                       value="1066">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Бруней-Даруссалам">Бруней-Даруссалам</label>
                             </li>
@@ -564,7 +613,8 @@
                                        for="Вануату">Вануату</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Великобритания" value="11">
+                                <input type="checkbox" class="form-check-input filled-in" id="Великобритания"
+                                       value="11">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Великобритания">Великобритания</label>
                             </li>
@@ -579,12 +629,14 @@
                                        for="Венесуэла">Венесуэла</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Внешние-малые-острова-США" value="1064">
+                                <input type="checkbox" class="form-check-input filled-in" id="Внешние-малые-острова-США"
+                                       value="1064">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Внешние-малые-острова-США">Внешние малые острова США</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Западная-Сахара" value="1043">
+                                <input type="checkbox" class="form-check-input filled-in" id="Западная-Сахара"
+                                       value="1043">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Западная-Сахара">Западная Сахара</label>
                             </li>
@@ -594,7 +646,8 @@
                                        for="Вьетнам">Вьетнам</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Вьетнам-Северный" value="170">
+                                <input type="checkbox" class="form-check-input filled-in" id="Вьетнам-Северный"
+                                       value="170">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Вьетнам-Северный">Вьетнам Северный</label>
                             </li>
@@ -649,12 +702,14 @@
                                        for="Германия">Германия</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Германия-(ГДР)" value="60">
+                                <input type="checkbox" class="form-check-input filled-in" id="Германия-(ГДР)"
+                                       value="60">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Германия-(ГДР)">Германия (ГДР)</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Германия-(ФРГ)" value="18">
+                                <input type="checkbox" class="form-check-input filled-in" id="Германия-(ФРГ)"
+                                       value="18">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Германия-(ФРГ)">Германия (ФРГ)</label>
                             </li>
@@ -804,7 +859,8 @@
                                        for="Казахстан">Казахстан</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Каймановы-острова" value="1051">
+                                <input type="checkbox" class="form-check-input filled-in" id="Каймановы-острова"
+                                       value="1051">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Каймановы-острова">Каймановы острова</label>
                             </li>
@@ -874,7 +930,8 @@
                                        for="Корея">Корея</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Корея-Северная" value="137">
+                                <input type="checkbox" class="form-check-input filled-in" id="Корея-Северная"
+                                       value="137">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Корея-Северная">Корея Северная</label>
                             </li>
@@ -1014,7 +1071,8 @@
                                        for="Мартиника">Мартиника</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Маршалловы-острова" value="1067">
+                                <input type="checkbox" class="form-check-input filled-in" id="Маршалловы-острова"
+                                       value="1067">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Маршалловы-острова">Маршалловы острова</label>
                             </li>
@@ -1029,7 +1087,8 @@
                                        for="Мексика">Мексика</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Мелкие-отдаленные-острова-США" value="1041">
+                                <input type="checkbox" class="form-check-input filled-in"
+                                       id="Мелкие-отдаленные-острова-США" value="1041">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Мелкие-отдаленные-острова-США">Мелкие отдаленные острова США</label>
                             </li>
@@ -1094,12 +1153,14 @@
                                        for="Никарагуа">Никарагуа</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Новая-Зеландия" value="35">
+                                <input type="checkbox" class="form-check-input filled-in" id="Новая-Зеландия"
+                                       value="35">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Новая-Зеландия">Новая Зеландия</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Новая-Каледония" value="1006">
+                                <input type="checkbox" class="form-check-input filled-in" id="Новая-Каледония"
+                                       value="1006">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Новая-Каледония">Новая Каледония</label>
                             </li>
@@ -1114,9 +1175,11 @@
                                        for="ОАЭ">ОАЭ</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Оккупированная-Палестинская-территория" value="1019">
+                                <input type="checkbox" class="form-check-input filled-in"
+                                       id="Оккупированная-Палестинская-территория" value="1019">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
-                                       for="Оккупированная-Палестинская-территория">Оккупированная Палестинская территория</label>
+                                       for="Оккупированная-Палестинская-территория">Оккупированная Палестинская
+                                    территория</label>
                             </li>
                             <li class="dropdown-item">
                                 <input type="checkbox" class="form-check-input filled-in" id="Оман" value="1003">
@@ -1129,17 +1192,20 @@
                                        for="Остров-Мэн">Остров Мэн</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Остров-Святой-Елены" value="1047">
+                                <input type="checkbox" class="form-check-input filled-in" id="Остров-Святой-Елены"
+                                       value="1047">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Остров-Святой-Елены">Остров Святой Елены</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Острова-Кука" value="1063">
+                                <input type="checkbox" class="form-check-input filled-in" id="Острова-Кука"
+                                       value="1063">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Острова-Кука">Острова Кука</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="острова-Теркс-и-Кайкос" value="1007">
+                                <input type="checkbox" class="form-check-input filled-in" id="острова-Теркс-и-Кайкос"
+                                       value="1007">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="острова-Теркс-и-Кайкос">острова Теркс и Кайкос</label>
                             </li>
@@ -1164,7 +1230,8 @@
                                        for="Панама">Панама</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Папуа---Новая-Гвинея" value="163">
+                                <input type="checkbox" class="form-check-input filled-in" id="Папуа---Новая-Гвинея"
+                                       value="163">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Папуа---Новая-Гвинея">Папуа - Новая Гвинея</label>
                             </li>
@@ -1199,7 +1266,8 @@
                                        for="Реюньон">Реюньон</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Российская-империя" value="1033">
+                                <input type="checkbox" class="form-check-input filled-in" id="Российская-империя"
+                                       value="1033">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Российская-империя">Российская империя</label>
                             </li>
@@ -1234,7 +1302,8 @@
                                        for="Сан-Марино">Сан-Марино</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Саудовская-Аравия" value="158">
+                                <input type="checkbox" class="form-check-input filled-in" id="Саудовская-Аравия"
+                                       value="158">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Саудовская-Аравия">Саудовская Аравия</label>
                             </li>
@@ -1244,7 +1313,8 @@
                                        for="Свазиленд">Свазиленд</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Сейшельские-острова" value="1010">
+                                <input type="checkbox" class="form-check-input filled-in" id="Сейшельские-острова"
+                                       value="1010">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Сейшельские-острова">Сейшельские острова</label>
                             </li>
@@ -1254,7 +1324,8 @@
                                        for="Сенегал">Сенегал</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Сент-Винсент-и-Гренадины" value="1055">
+                                <input type="checkbox" class="form-check-input filled-in" id="Сент-Винсент-и-Гренадины"
+                                       value="1055">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Сент-Винсент-и-Гренадины">Сент-Винсент и Гренадины</label>
                             </li>
@@ -1269,7 +1340,8 @@
                                        for="Сербия">Сербия</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Сербия-и-Черногория" value="174">
+                                <input type="checkbox" class="form-check-input filled-in" id="Сербия-и-Черногория"
+                                       value="174">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Сербия-и-Черногория">Сербия и Черногория</label>
                             </li>
@@ -1299,7 +1371,8 @@
                                        for="Словения">Словения</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Соломоновы-Острова" value="1069">
+                                <input type="checkbox" class="form-check-input filled-in" id="Соломоновы-Острова"
+                                       value="1069">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Соломоновы-Острова">Соломоновы Острова</label>
                             </li>
@@ -1329,7 +1402,8 @@
                                        for="США">США</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Сьерра-Леоне" value="1023">
+                                <input type="checkbox" class="form-check-input filled-in" id="Сьерра-Леоне"
+                                       value="1023">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Сьерра-Леоне">Сьерра-Леоне</label>
                             </li>
@@ -1369,7 +1443,8 @@
                                        for="Тонга">Тонга</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Тринидад-и-Тобаго" value="88">
+                                <input type="checkbox" class="form-check-input filled-in" id="Тринидад-и-Тобаго"
+                                       value="88">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Тринидад-и-Тобаго">Тринидад и Тобаго</label>
                             </li>
@@ -1414,12 +1489,14 @@
                                        for="Уругвай">Уругвай</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Фарерские-острова" value="1008">
+                                <input type="checkbox" class="form-check-input filled-in" id="Фарерские-острова"
+                                       value="1008">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Фарерские-острова">Фарерские острова</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Федеративные-Штаты-Микронезии" value="1038">
+                                <input type="checkbox" class="form-check-input filled-in"
+                                       id="Федеративные-Штаты-Микронезии" value="1038">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Федеративные-Штаты-Микронезии">Федеративные Штаты Микронезии</label>
                             </li>
@@ -1444,12 +1521,14 @@
                                        for="Франция">Франция</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Французская-Гвиана" value="1032">
+                                <input type="checkbox" class="form-check-input filled-in" id="Французская-Гвиана"
+                                       value="1032">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Французская-Гвиана">Французская Гвиана</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Французская-Полинезия" value="1046">
+                                <input type="checkbox" class="form-check-input filled-in" id="Французская-Полинезия"
+                                       value="1046">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Французская-Полинезия">Французская Полинезия</label>
                             </li>
@@ -1499,7 +1578,8 @@
                                        for="Швеция">Швеция</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Шпицберген-и-Ян-Майен" value="1070">
+                                <input type="checkbox" class="form-check-input filled-in" id="Шпицберген-и-Ян-Майен"
+                                       value="1070">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Шпицберген-и-Ян-Майен">Шпицберген и Ян-Майен</label>
                             </li>
@@ -1514,7 +1594,8 @@
                                        for="Эквадор">Эквадор</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Экваториальная-Гвинея" value="1061">
+                                <input type="checkbox" class="form-check-input filled-in" id="Экваториальная-Гвинея"
+                                       value="1061">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Экваториальная-Гвинея">Экваториальная Гвинея</label>
                             </li>
@@ -1544,7 +1625,8 @@
                                        for="Югославия">Югославия</label>
                             </li>
                             <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="Югославия-(ФР)" value="66">
+                                <input type="checkbox" class="form-check-input filled-in" id="Югославия-(ФР)"
+                                       value="66">
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="Югославия-(ФР)">Югославия (ФР)</label>
                             </li>
@@ -1604,7 +1686,9 @@
                 <!-- Section: Rating -->
 
                 <!-- Search Button -->
-                <button type="button" id="filmRecommendationFilterSearch" class="btn btn-outline-warning col-2 my-3">Поиск</button>
+                <button type="button" id="filmRecommendationFilterSearch" class="btn btn-outline-warning col-2 my-3">
+                    Поиск
+                </button>
                 <!-- Search Button -->
 
             </section>
@@ -1612,7 +1696,8 @@
         <!-- Section: Filters -->
 
         <!-- Section: Films -->
-        <section id="filmRecommendationResult" class="d-flex overflow-auto col-12 justify-content-between align-items-center">
+        <section id="filmRecommendationResult"
+                 class="d-flex overflow-auto col-12 justify-content-between align-items-center">
         </section>
         <!-- Section: Films -->
     </div>
