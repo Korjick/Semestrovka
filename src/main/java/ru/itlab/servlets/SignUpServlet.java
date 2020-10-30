@@ -16,15 +16,17 @@ import java.sql.Date;
 public class SignUpServlet extends HttpServlet {
 
     private SignUpService signUpService;
+    private String BASE_CONTEXT;
 
     @Override
     public void init(ServletConfig config) {
         signUpService = (SignUpService) config.getServletContext().getAttribute("signUpService");
+        BASE_CONTEXT = (String) config.getServletContext().getAttribute("baseContext");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(BASE_CONTEXT);
     }
 
     @Override
@@ -47,9 +49,9 @@ public class SignUpServlet extends HttpServlet {
         if (id > 0) {
             HttpSession session = request.getSession();
             session.setAttribute("id", id);
-            response.sendRedirect(request.getContextPath() + "/profile");
+            response.sendRedirect(BASE_CONTEXT + "/profile");
         } else {
-            response.sendRedirect(request.getContextPath() + "/");
+            response.sendRedirect(BASE_CONTEXT);
         }
     }
 }

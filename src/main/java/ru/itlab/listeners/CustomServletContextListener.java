@@ -16,6 +16,7 @@ public class CustomServletContextListener implements ServletContextListener {
     private static final String DB_USERNAME = "postgres";
     private static final String DB_PASSWORD = "Korjicks2281337";
     private static final String DB_DRIVER = "org.postgresql.Driver";
+    private static final String BASE_CONTEXT = "http://localhost:8080/inf-1-sem";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -31,9 +32,13 @@ public class CustomServletContextListener implements ServletContextListener {
         SignInService signInService = new SignInServiceImpl(usersRepository);
         UsersService usersService = new UsersServiceImpl(usersRepository);
 
+        FilmsService filmsService = new FilmsServiceImpl();
+
         servletContext.setAttribute("signUpService", signUpService);
         servletContext.setAttribute("signInService", signInService);
         servletContext.setAttribute("usersService", usersService);
+        servletContext.setAttribute("filmsService", filmsService);
+        servletContext.setAttribute("baseContext", BASE_CONTEXT);
     }
 
     @Override

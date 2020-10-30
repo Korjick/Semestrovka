@@ -1,9 +1,10 @@
 package ru.itlab.services;
 
-import ru.itlab.dto.UserDto;
+import ru.itlab.models.User;
 
 import java.util.Optional;
 
 public interface UsersService {
-    Optional<UserDto> getUserInfo(Long id);
+    Optional<User> getUserInfo(Long id);
+    // TODO: изменение пароля, соцсети
 }

@@ -1,6 +1,5 @@
 package ru.itlab.repositories;
 
-import ru.itlab.dto.UserDto;
 import ru.itlab.models.User;
 
 import javax.sql.DataSource;

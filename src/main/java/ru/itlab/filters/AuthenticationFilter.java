@@ -32,7 +32,7 @@ public class AuthenticationFilter implements Filter {
         if (isAuthenticated && !isLoginPage || !isAuthenticated && isLoginPage) {
             filterChain.doFilter(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/signIn");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 
