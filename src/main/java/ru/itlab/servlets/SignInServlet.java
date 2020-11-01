@@ -4,6 +4,7 @@ import ru.itlab.dto.SignInForm;
 import ru.itlab.services.SignInService;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +25,15 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         response.sendRedirect(BASE_CONTEXT);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         SignInForm form = new SignInForm();
         form.setEmail(request.getParameter("email"));
         form.setPassword(request.getParameter("password"));
@@ -39,6 +44,7 @@ public class SignInServlet extends HttpServlet {
             session.setAttribute("id", id);
             response.sendRedirect(BASE_CONTEXT + "/profile");
         } else {
+            request.getSession().setAttribute("error", id);
             response.sendRedirect(BASE_CONTEXT);
         }
     }

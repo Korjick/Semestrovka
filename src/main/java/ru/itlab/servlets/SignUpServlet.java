@@ -4,6 +4,7 @@ import ru.itlab.dto.SignUpForm;
 import ru.itlab.services.SignUpService;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +27,15 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         response.sendRedirect(BASE_CONTEXT);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         SignUpForm form = new SignUpForm();
         form.setUsername(request.getParameter("username"));
         form.setEmail(request.getParameter("email"));
@@ -45,12 +50,12 @@ public class SignUpServlet extends HttpServlet {
 
         // TODO: разобрать коды ошибок
         Long id = signUpService.signUp(form);
-        System.out.println(id);
         if (id > 0) {
             HttpSession session = request.getSession();
             session.setAttribute("id", id);
             response.sendRedirect(BASE_CONTEXT + "/profile");
         } else {
+            request.getSession().setAttribute("error", id);
             response.sendRedirect(BASE_CONTEXT);
         }
     }

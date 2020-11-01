@@ -3,7 +3,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>ЧЁ`за`фильм? - главная</title>
+    <title>Orange.TV - главная</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
     <link rel="stylesheet" href="${contextPath}/css/style.css">
@@ -14,7 +14,10 @@
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #000000">
     <div class="container-fluid">
-        <a href="" class="navbar-brand ml-3">ЧЁ`за`фильм?</a>
+
+        <a id="logo" href="" class="navbar-brand">
+            <img src="${contextPath}/img/orange.png" width="30" height="30" alt="" class="d-inline-block align-top mr-3"
+                 loading="lazy">Orange.TV</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                 aria-controls="navbarContent" aria-expanded="false">
@@ -71,7 +74,9 @@
                                    required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-outline-warning my-3">Авторизация</button>
+                    <button type="submit" class="btn btn-outline my-3" style="border-color: #fe6637; color: #fe6637;">
+                        Авторизация
+                    </button>
                 </div>
             </form>
             <div class="modal-footer d-flex justify-content-start">
@@ -131,7 +136,9 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-outline-warning my-3">Регистрация</button>
+                    <button type="submit" class="btn btn-outline my-3" style="border-color: #fe6637; color: #fe6637;">
+                        Регистрация
+                    </button>
                 </div>
             </form>
             <div class="modal-footer d-flex justify-content-start">
@@ -171,7 +178,7 @@
 <!-- Main -->
 
 <main>
-    <img id="mainPicture" class="d-block container-fluid" src="${contextPath}/img/sliderOnly.jpg" alt="">
+    <img id="mainPicture" class="d-block container-fluid" src="${contextPath}/img/background.jpg" alt="">
     <div id="filmRecommendationMenu" class="row justify-content-center align-items-center container-fluid">
 
         <!-- Section: Filters -->
@@ -179,7 +186,7 @@
 
 
             <section class="row justify-content-center align-items-center">
-                <h3 class="text-warning">Фильтр</h3>
+                <h3 style="color: #fe6637;">Фильтр</h3>
 
                 <!-- Section: Category -->
                 <section class="row col-6 my-3" id="filmRecommendationFilterCategory">
@@ -226,11 +233,14 @@
                                 <label class="form-check-label small text-uppercase card-link-secondary text-body"
                                        for="детский">детский</label>
                             </li>
-                            <li class="dropdown-item">
-                                <input type="checkbox" class="form-check-input filled-in" id="для-взрослых" value="20">
-                                <label class="form-check-label small text-uppercase card-link-secondary text-body"
-                                       for="для-взрослых">для взрослых</label>
-                            </li>
+                            <c:if test="${pageContext.session.getAttribute('id') != null}">
+                                <li class="dropdown-item">
+                                    <input type="checkbox" class="form-check-input filled-in" id="для-взрослых"
+                                           value="20">
+                                    <label class="form-check-label small text-uppercase card-link-secondary text-body"
+                                           for="для-взрослых">для взрослых</label>
+                                </li>
+                            </c:if>
                             <li class="dropdown-item">
                                 <input type="checkbox" class="form-check-input filled-in" id="документальный"
                                        value="12">
@@ -1686,7 +1696,8 @@
                 <!-- Section: Rating -->
 
                 <!-- Search Button -->
-                <button type="button" id="filmRecommendationFilterSearch" class="btn btn-outline-warning col-2 my-3">
+                <button type="button" id="filmRecommendationFilterSearch" class="btn col-2 my-3"
+                        style="border-color: #fe6637; color: #fe6637;">
                     Поиск
                 </button>
                 <!-- Search Button -->
@@ -1700,8 +1711,45 @@
                  class="d-flex overflow-auto col-12 justify-content-between align-items-center">
         </section>
         <!-- Section: Films -->
+
+        <!-- Section: Personal -->
+        <c:if test="${pageContext.session.getAttribute('id') != null}">
+            <div class="d-flex justify-content-start align-items-center">
+                <img src="${contextPath}/img/star.png" class="my-3 mr-3" style="width: 50px; height: 50px;" alt="">
+                <h5 style="color: #fe6637;">Рекомендации</h5>
+            </div>
+            <section id="filmRecommendationResultPersonal"
+                     class="d-flex overflow-auto col-12 justify-content-between align-items-center">
+            </section>
+        </c:if>
+        <!-- Section: Personal -->
     </div>
 </main>
+<c:if test="${pageContext.session.getAttribute('error') != null}">
+    <c:choose>
+        <c:when test="${pageContext.session.getAttribute('error') == '1'}">
+            <script>
+                window.addEventListener("load", function () {
+                    alert("Неправильный логин и/или пароль");
+                });
+            </script>
+        </c:when>
+        <c:when test="${pageContext.session.getAttribute('error') == '2'}">
+            <script>
+                window.addEventListener("load", function () {
+                    alert("Пользователь с таким email не найден");
+                });
+            </script>
+        </c:when>
+        <c:when test="${pageContext.session.getAttribute('error') == '3'}">
+            <script>
+                window.addEventListener("load", function () {
+                    alert("Неккоректный формат даты");
+                });
+            </script>
+        </c:when>
+    </c:choose>
+</c:if>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
         integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"
         crossorigin="anonymous"></script>

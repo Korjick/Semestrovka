@@ -6,5 +6,6 @@ import java.util.Optional;
 
 public interface UsersService {
     Optional<User> getUserInfo(Long id);
-    // TODO: изменение пароля, соцсети
+    void deleteUser(Long id);
+    void changePassword(Long id, String password);
 }

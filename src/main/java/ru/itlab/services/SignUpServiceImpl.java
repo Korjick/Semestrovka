@@ -6,6 +6,7 @@ import ru.itlab.dto.SignUpForm;
 import ru.itlab.models.User;
 import ru.itlab.repositories.UsersRepository;
 
+import java.util.Calendar;
 import java.util.Optional;
 
 public class SignUpServiceImpl implements SignUpService {
@@ -21,19 +22,22 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public Long signUp(SignUpForm form) {
         String email = form.getEmail();
+        if (Calendar.getInstance().get(Calendar.YEAR) - form.getDateOfBirth().getYear() <= 100) {
+            if (!usersRepository.getUserByEmail(email).isPresent()) {
+                User user = User.builder()
+                        .username(form.getUsername())
+                        .email(form.getEmail())
+                        .dateOfBirth(form.getDateOfBirth())
+                        .hashPassword(passwordEncoder.encode(form.getPassword()))
+                        .build();
 
-        if (!usersRepository.getUserByEmail(email).isPresent()) {
-            User user = User.builder()
-                    .username(form.getUsername())
-                    .email(form.getEmail())
-                    .dateOfBirth(form.getDateOfBirth())
-                    .hashPassword(passwordEncoder.encode(form.getPassword()))
-                    .build();
-
-            usersRepository.save(user);
-            return usersRepository.getUserByEmail(email).get().getId();
+                usersRepository.save(user);
+                return usersRepository.getUserByEmail(email).get().getId();
+            } else {
+                return (long) -2;
+            }
         } else {
-            return (long) -1;
+            return (long) -3;
         }
     }
 }

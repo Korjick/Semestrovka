@@ -12,13 +12,43 @@
     <link rel="stylesheet" href="${contextPath}/css/profile.css">
 </head>
 <body>
+
+<!-- Modal -->
+<div class="modal fade" id="filmModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="#filmModal"></h3>
+                    <h4></h4>
+                </div>
+                <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-5">
+                    <img src="" alt="">
+                </div>
+                <div class="col-7">
+                    <h5></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
 <div class="container">
     <div class="main-body">
 
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="${contextPath}/signIn" class="text-warning">Домашняя</a></li>
+                <li class="breadcrumb-item"><a href="${contextPath}/signIn" style="color: #fe6637;">Домашняя</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Профиль</li>
             </ol>
         </nav>
@@ -35,7 +65,9 @@
                                 <p class="text-secondary mb-1">${email}</p>
                                 <p class="text-muted font-size-sm">${dateofbirth}</p>
                             </div>
-                            <a href="${contextPath}/signOut" class="btn btn-outline-danger">Выйти</a>
+                            <button id="changePassword" class="btn btn-outline-warning my-1">Сменить пароль</button>
+                            <button id="clearUser" class="btn btn-outline-danger my-1">Удалить пользователя</button>
+                            <a href="${contextPath}/signOut" class="btn btn-outline-danger my-1">Выйти</a>
                         </div>
                     </div>
                 </div>
@@ -43,16 +75,22 @@
             <div class="col-lg-8 col-sm-12">
                 <div class="row gutters-sm">
                     <div class="col-lg-6 col-sm-12 mb-3">
-                        <div class="card h-100">
-                            <div class="card-body">
+                        <div class="card vh-100">
+                            <button id="clearWatchedFilms" class="btn btn-outline-danger">Стереть просмотренные</button>
+                            <div id="watchedFilms" class="card-body">
+                                <ul class="list-group list-group-flush">
 
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-12 mb-3">
-                        <div class="card h-100">
-                            <div class="card-body">
+                        <div class="card vh-100">
+                            <button id="clearLikedFilms" class="btn btn-outline-danger">Стереть понравившиеся</button>
+                            <div id="likedFilms" class="card-body">
+                                <ul class="list-group list-group-flush">
 
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -64,5 +102,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
         integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"
         crossorigin="anonymous"></script>
+<script src="${contextPath}/js/profile.js"></script>
 </body>
 </html>

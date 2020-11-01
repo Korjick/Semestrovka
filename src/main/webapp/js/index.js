@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function checkPassword() {
         let check = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if (!password.value.match(check)) {
-            password.setCustomValidity("Wrong format of password. " +
+            password.setCustomValidity("Неправильный формат пароля. " +
                 "Пароль должен состоять от 6 ддо 20 латинских символов, содержать хотя бы одну цифру и одну заглавную букву.");
         } else {
             password.setCustomValidity('');
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             RatingArray.push(RatingFields[i].value);
         }
 
-        let url = window.location.href + 'filmRecommendation';
+        let url = window.location.href.split("?")[0] + 'filmRecommendation';
 
         try {
             let response = await fetch(url, {
@@ -67,8 +67,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            let result = await response.json();
-            await generateRecommendationList(result);
+            let result = await response.text();
+            await generateRecommendationList(JSON.parse(result.split("@")[0]));
+            await generateRecommendationResultPersonal(JSON.parse(result.split("@")[1]))
         } catch (e) {
             alert(e);
         }
@@ -89,9 +90,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function generateRecommendationResultPersonal(result){
+        let filmRecommendationResultPersonal = document.getElementById('filmRecommendationResultPersonal');
+        let html = "";
+        if(filmRecommendationResultPersonal != null){
+            for (let i = 0; i < result.length; i++) {
+                html += '<img src="' + result[i].posterUrl + '" class="rounded mx-3 my-3" alt="' + result[i].filmId + '" data-toggle="modal" data-target="#filmModal">\n';
+            }
+            filmRecommendationResultPersonal.innerHTML = html;
+
+            let resultImages = filmRecommendationResultPersonal.getElementsByTagName('img');
+            for (let i = 0; i < resultImages.length; i++) {
+                resultImages[i].addEventListener('click', getFilmById, false);
+            }
+        }
+    }
+
     async function getFilmById() {
         let id = this.alt;
-        let url = window.location.href + 'film';
+        let url = window.location.href.split("?")[0] + 'film';
 
         try {
             let response = await fetch(url, {

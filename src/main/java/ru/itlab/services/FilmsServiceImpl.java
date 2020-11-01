@@ -3,6 +3,9 @@ package ru.itlab.services;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.itlab.models.Film;
+import ru.itlab.repositories.UserFilmsRepository;
+import ru.itlab.repositories.UserFilmsRepositoryImpl;
+import ru.itlab.repositories.UsersRepository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,15 +16,18 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class FilmsServiceImpl implements FilmsService {
 
-    private String BASE_URL = "https://kinopoiskapiunofficial.tech/api/v2.1/films/%d";
-    private String FILTER_URL = "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-filters?";
-    private String FILTER_WITHOUT_ARRAY = "order=RATING&type=FILM&ratingFrom=%d&ratingTo=%d&yearFrom=%d&yearTo=%d&page=%d";
+    private UserFilmsRepository userFilmsRepository;
+
+    private final String BASE_URL = "https://kinopoiskapiunofficial.tech/api/v2.1/films/%d";
+    private final String FILTER_URL = "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-filters?";
+    private final String FILTER_WITHOUT_ARRAY = "order=RATING&type=FILM&ratingFrom=%d&ratingTo=%d&yearFrom=%d&yearTo=%d&page=%d";
+
+    public FilmsServiceImpl(UserFilmsRepository userFilmsRepository) {
+        this.userFilmsRepository = userFilmsRepository;
+    }
 
     @Override
     public JSONObject getFilmByID(Long id) {
@@ -64,7 +70,7 @@ public class FilmsServiceImpl implements FilmsService {
             e.printStackTrace();
         } finally {
             try {
-                if(reader != null) reader.close();
+                if (reader != null) reader.close();
                 if (inputStreamReader != null) inputStreamReader.close();
             } catch (Exception e) {
             }
@@ -80,13 +86,13 @@ public class FilmsServiceImpl implements FilmsService {
         String countriesString, genresString;
 
         try {
-            if(countries != null) countriesString = countries.toString()
+            if (countries != null) countriesString = countries.toString()
                     .replaceAll("\\[", "")
                     .replaceAll("]", "")
                     .replaceAll(" ", "");
             else countriesString = "";
 
-            if(genres != null) genresString = genres.toString()
+            if (genres != null) genresString = genres.toString()
                     .replaceAll("\\[", "")
                     .replaceAll("]", "")
                     .replaceAll(" ", "");
@@ -155,13 +161,63 @@ public class FilmsServiceImpl implements FilmsService {
             e.printStackTrace();
         } finally {
             try {
-                if(reader != null) reader.close();
+                if (reader != null) reader.close();
                 if (inputStreamReader != null) inputStreamReader.close();
             } catch (Exception e) {
             }
         }
 
         return null;
+    }
+
+    @Override
+    public JSONArray getFilmsPersonal(Long user_id) {
+        JSONArray personalFilms = new JSONArray();
+
+        List<Long> arr = userFilmsRepository.getPersonalFilms(user_id);
+        for (Long i : arr) personalFilms.put(getFilmByID(i));
+
+        return personalFilms;
+    }
+
+    @Override
+    public JSONArray getWatchedFilms(Long user_id) {
+        JSONArray watchedFilms = new JSONArray();
+
+        List<Long> arr = userFilmsRepository.getWatchedFilms(user_id);
+        for (Long i : arr) watchedFilms.put(getFilmByID(i));
+
+        return watchedFilms;
+    }
+
+    @Override
+    public JSONArray getLikedFilms(Long user_id) {
+        JSONArray likedFilms = new JSONArray();
+
+        List<Long> arr = userFilmsRepository.getLikedFilms(user_id);
+        for (Long i : arr) likedFilms.put(getFilmByID(i));
+
+        return likedFilms;
+    }
+
+    @Override
+    public void saveWatchedFilms(Long user_id, Long film_id) {
+        userFilmsRepository.saveWatchedFilms(user_id, film_id);
+    }
+
+    @Override
+    public void saveLikedFilms(Long user_id, Long film_id) {
+        userFilmsRepository.saveLikedFilms(user_id, film_id);
+    }
+
+    @Override
+    public void deleteWatchedFilms(Long user_id) {
+        userFilmsRepository.deleteWatchedFilms(user_id);
+    }
+
+    @Override
+    public void deleteLikedFilms(Long user_id) {
+        userFilmsRepository.deleteLikedFilms(user_id);
     }
 
     private String readAll(Reader rd) throws IOException {

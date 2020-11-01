@@ -17,6 +17,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private final static String SQL_GET_ALL = "select * from users";
     private final static String SQL_GET_USER_BY_ID = "select * from users where id=?";
     private final String SQL_USER_BY_EMAIL = "select * from users where email=?";
+    private final String SQL_DELETE_USER = "delete from users where id=?";
 
     public UsersRepositoryJdbcImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -33,6 +34,31 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             statement.setString(2, entity.getEmail());
             statement.setDate(3, entity.getDateOfBirth());
             statement.setString(4, entity.getHashPassword());
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Problem with insert user");
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException throwables) {
+            }
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(SQL_DELETE_USER, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, id);
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {

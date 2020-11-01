@@ -22,6 +22,8 @@ public class SignOutServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         if(request.getSession(false).getAttribute("id") != null){
             request.getSession(false).setAttribute("id", null);
         }

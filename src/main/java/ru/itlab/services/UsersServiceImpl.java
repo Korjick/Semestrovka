@@ -22,4 +22,14 @@ public class UsersServiceImpl implements UsersService {
 
         return Optional.empty();
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        usersRepository.delete(id);
+    }
+
+    @Override
+    public void changePassword(Long id, String password) {
+
+    }
 }
