@@ -10,5 +10,6 @@ public interface UsersRepository {
     Optional<User> getUserByEmail(String email);
     void save(User entity);
     void delete(Long id);
+    void changePassword(Long id, String password);
     List<User> findAll();
 }

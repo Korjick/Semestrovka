@@ -1,15 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="username" value="${pageContext.session.getAttribute('username')}" />
-<c:set var="email" value="${pageContext.session.getAttribute('email')}" />
-<c:set var="dateofbirth" value="${pageContext.session.getAttribute('dateofbirth')}" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="username" value="${pageContext.session.getAttribute('username')}"/>
+<c:set var="email" value="${pageContext.session.getAttribute('email')}"/>
+<c:set var="dateofbirth" value="${pageContext.session.getAttribute('dateofbirth')}"/>
 <html>
 <head>
     <title>Ваш профиль</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
     <link rel="stylesheet" href="${contextPath}/css/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -40,6 +41,37 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Смена пароля:</h5>
+                <button class="btn-close" data-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <label for="inputPassword" class="col-sm-4 col-form-label">Пароль</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword" name="password"
+                               required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputPasswordRepeat" class="col-sm-4 col-form-label">Повторите пароль</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPasswordRepeat" required>
+                    </div>
+                </div>
+                <button id="changePassword" type="submit" class="btn btn-outline my-3"
+                        style="border-color: #fe6637; color: #fe6637;">
+                    Подтвердить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal -->
 
 <div class="container">
@@ -59,13 +91,18 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="${contextPath}/img/icons8-cat-profile-90.png" alt="" class="rounded-circle" width="150">
+                            <img src="${contextPath}/img/icons8-cat-profile-90.png" alt="" class="rounded-circle"
+                                 width="150">
                             <div class="mt-3">
                                 <h4>${username}</h4>
                                 <p class="text-secondary mb-1">${email}</p>
                                 <p class="text-muted font-size-sm">${dateofbirth}</p>
                             </div>
-                            <button id="changePassword" class="btn btn-outline-warning my-1">Сменить пароль</button>
+                            <c:if test="${pageContext.session.getAttribute('oauth') == null}">
+                                <button class="btn btn-outline-warning my-1" data-toggle="modal"
+                                        data-target="#changePasswordModal">Сменить пароль
+                                </button>
+                            </c:if>
                             <button id="clearUser" class="btn btn-outline-danger my-1">Удалить пользователя</button>
                             <a href="${contextPath}/signOut" class="btn btn-outline-danger my-1">Выйти</a>
                         </div>

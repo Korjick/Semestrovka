@@ -8,6 +8,6 @@ import java.sql.Date;
 public class SignUpForm {
     private String username;
     private String email;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String password;
 }

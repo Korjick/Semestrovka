@@ -22,7 +22,8 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public Long signUp(SignUpForm form) {
         String email = form.getEmail();
-        if (Calendar.getInstance().get(Calendar.YEAR) - form.getDateOfBirth().getYear() <= 100) {
+        System.out.println(form.getDateOfBirth());
+        if (Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(form.getDateOfBirth().split("-")[0]) <= 100) {
             if (!usersRepository.getUserByEmail(email).isPresent()) {
                 User user = User.builder()
                         .username(form.getUsername())

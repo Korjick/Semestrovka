@@ -44,8 +44,7 @@ public class SignInServlet extends HttpServlet {
             session.setAttribute("id", id);
             response.sendRedirect(BASE_CONTEXT + "/profile");
         } else {
-            request.getSession().setAttribute("error", id);
-            response.sendRedirect(BASE_CONTEXT);
+            response.sendRedirect(BASE_CONTEXT + "?error=" + id);
         }
     }
 }

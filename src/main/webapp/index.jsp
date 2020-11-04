@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
     <link rel="stylesheet" href="${contextPath}/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <!-- Navigation Menu -->
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #000000">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: #0D0D0D">
     <div class="container-fluid">
 
         <a id="logo" href="" class="navbar-brand">
@@ -20,16 +21,13 @@
                  loading="lazy">Orange.TV</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-                aria-controls="navbarContent" aria-expanded="false">
+                aria-controls="navbarContent" aria-expanded="false" style="color: azure; border-color: azure;">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="" class="nav-link">Домашняя</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">О нас</a>
+                    <a href="${contextPath}/about" class="nav-link">О нас</a>
                 </li>
             </ul>
             <c:if test="${pageContext.session.getAttribute('id') == null}">
@@ -81,6 +79,7 @@
             </form>
             <div class="modal-footer d-flex justify-content-start">
                 <h5>Войти с помощью:</h5>
+                <button id="vkauthsignin" class="btn btn-outline my-3" style="border-color: #fe6637; color: #fe6637;">VK</button>
             </div>
         </div>
     </div>
@@ -127,7 +126,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <legend class="col-form-label col-sm-10">Я согласен с <a href="">Правилами сервиса</a>
+                        <legend class="col-form-label col-sm-10">Я согласен с <a href="${contextPath}/about">Правилами сервиса</a>
                         </legend>
                         <div class="col-sm-2">
                             <div class="form-check">
@@ -143,12 +142,13 @@
             </form>
             <div class="modal-footer d-flex justify-content-start">
                 <h5>Зарегестрироваться с помощью:</h5>
+                <button id="vkauthsignup" class="btn btn-outline my-3" style="border-color: #fe6637; color: #fe6637;">VK</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="filmModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+<div class="modal fade" id="filmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -171,6 +171,11 @@
                     </ul>
                 </div>
             </div>
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+                <c:if test="${pageContext.session.getAttribute('id') != null}">
+
+                </c:if>
+            </div>
         </div>
     </div>
 </div>
@@ -179,12 +184,20 @@
 
 <main>
     <img id="mainPicture" class="d-block container-fluid" src="${contextPath}/img/background.jpg" alt="">
+    <span class="text-light-custom">
+        <h3>Здесь выбирают фильмы!</h3>
+        <h4>Не знаете, что посмотреть?</h4>
+        <h4>У нас вы быстро найдете хорошие фильмы, которые вам понравятся!</h4>
+    </span>
+
+    <p class="text-light-custom text-center my-3">Оцените фильмы и сериалы и получите рекомендации</p>
+    <p class="text-light-custom text-center my-3">Войдите в систему и начните оцену фильмов.
+        Чем больше оценок вы ставите, тем точнее ваши рекомендации!</p>
+
     <div id="filmRecommendationMenu" class="row justify-content-center align-items-center container-fluid">
 
         <!-- Section: Filters -->
         <section id="filmRecommendationFilter" class="col-12 my-3 mx-3">
-
-
             <section class="row justify-content-center align-items-center">
                 <h3 style="color: #fe6637;">Фильтр</h3>
 
@@ -1657,17 +1670,17 @@
 
                 <!-- Section: Year -->
                 <section class="my-3 col-4" id="filmRecommendationFilterYear">
-                    <h5 class="font-weight-bold mb-3 text-light">Год</h5>
+                    <h5 class="font-weight-bold mb-3 text-light-custom">Год</h5>
                     <form>
                         <div class="d-flex align-items-center mt-4 pb-1">
                             <div class="md-form md-outline my-0">
                                 <input id="minAge" type="text" class="form-control mb-0" name="yearFrom" value="1880">
-                                <label for="minAge" class="text-light">Мин</label>
+                                <label for="minAge" class="text-light-custom">Мин</label>
                             </div>
                             <p class="px-2 mb-0 text-muted"> - </p>
                             <div class="md-form md-outline my-0">
                                 <input id="maxAge" type="text" class="form-control mb-0" name="yearTo" value="2020">
-                                <label for="maxAge" class="text-light">Макс</label>
+                                <label for="maxAge" class="text-light-custom">Макс</label>
                             </div>
                         </div>
                     </form>
@@ -1677,17 +1690,17 @@
 
                 <!-- Section: Rating -->
                 <section class="my-3 col-4" id="filmRecommendationFilterRating">
-                    <h5 class="font-weight-bold mb-3 text-light">Рейтинг</h5>
+                    <h5 class="font-weight-bold mb-3 text-light-custom">Рейтинг</h5>
                     <form>
                         <div class="d-flex align-items-center mt-4 pb-1">
                             <div class="md-form md-outline my-0">
                                 <input id="minRating" type="text" class="form-control mb-0" name="ratingFrom" value="0">
-                                <label for="minRating" class="text-light">Мин</label>
+                                <label for="minRating" class="text-light-custom">Мин</label>
                             </div>
                             <p class="px-2 mb-0 text-muted"> - </p>
                             <div class="md-form md-outline my-0">
                                 <input id="maxRating" type="text" class="form-control mb-0" name="ratingTo" value="10">
-                                <label for="maxRating" class="text-light">Макс</label>
+                                <label for="maxRating" class="text-light-custom">Макс</label>
                             </div>
                         </div>
                     </form>
@@ -1708,43 +1721,54 @@
 
         <!-- Section: Films -->
         <section id="filmRecommendationResult"
-                 class="d-flex overflow-auto col-12 justify-content-between align-items-center">
+                 class="d-flex overflow-auto col-12 justify-content-start align-items-center">
         </section>
         <!-- Section: Films -->
 
         <!-- Section: Personal -->
         <c:if test="${pageContext.session.getAttribute('id') != null}">
             <div class="d-flex justify-content-start align-items-center">
-                <img src="${contextPath}/img/star.png" class="my-3 mr-3" style="width: 50px; height: 50px;" alt="">
-                <h5 style="color: #fe6637;">Рекомендации</h5>
+                <img src="${contextPath}/img/star.png" class="my-3 mr-3" style="width: 30px; height: 30px;" alt="">
+                <h5 class="mt-1" style="color: #fe6637;">Рекомендации</h5>
             </div>
             <section id="filmRecommendationResultPersonal"
-                     class="d-flex overflow-auto col-12 justify-content-between align-items-center">
+                     class="d-flex overflow-auto col-12 justify-content-start align-items-center">
             </section>
         </c:if>
         <!-- Section: Personal -->
     </div>
 </main>
-<c:if test="${pageContext.session.getAttribute('error') != null}">
+<c:if test="${pageContext.request.getParameter('error') != null}">
     <c:choose>
-        <c:when test="${pageContext.session.getAttribute('error') == '1'}">
+        <c:when test="${pageContext.request.getParameter('error') == '-1'}">
             <script>
-                window.addEventListener("load", function () {
+                window.addEventListener("DOMContentLoaded", function () {
                     alert("Неправильный логин и/или пароль");
+                    window.history.replaceState({}, document.title, window.location.href.split("?")[0]);
                 });
             </script>
         </c:when>
-        <c:when test="${pageContext.session.getAttribute('error') == '2'}">
+        <c:when test="${pageContext.request.getParameter('error') == '-2'}">
             <script>
-                window.addEventListener("load", function () {
+                window.addEventListener("DOMContentLoaded", function () {
                     alert("Пользователь с таким email не найден");
+                    window.history.replaceState({}, document.title, window.location.href.split("?")[0]);
                 });
             </script>
         </c:when>
-        <c:when test="${pageContext.session.getAttribute('error') == '3'}">
+        <c:when test="${pageContext.request.getParameter('error') == '-3'}">
             <script>
-                window.addEventListener("load", function () {
+                window.addEventListener("DOMContentLoaded", function () {
                     alert("Неккоректный формат даты");
+                    window.history.replaceState({}, document.title, window.location.href.split("?")[0]);
+                });
+            </script>
+        </c:when>
+        <c:when test="${pageContext.request.getParameter('error') == '-4'}">
+            <script>
+                window.addEventListener("DOMContentLoaded", function () {
+                    alert("Ошибка авторизации через OAuth");
+                    window.history.replaceState({}, document.title, window.location.href.split("?")[0]);
                 });
             </script>
         </c:when>

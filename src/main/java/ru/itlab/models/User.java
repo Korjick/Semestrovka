@@ -17,8 +17,6 @@ public class User {
     private Long id;
     private String username;
     private String email;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String hashPassword;
-
-    //TODO: функция смена пароля
 }

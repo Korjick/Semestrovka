@@ -9,13 +9,10 @@ import java.util.*;
 
 public class UserFilmsRepositoryImpl implements UserFilmsRepository {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     private final String SQL_SELECT_WATCHED = "select \"filmsWatched\" from \"userFilms\" where user_id=?";
     private final String SQL_SELECT_LIKED = "select \"filmsLiked\" from \"userFilms\" where user_id=?";
-
-    private final String SQL_INSERT_WATCHED = "insert into \"userFilms\" (user_id, \"filmsWatched\") values (?, ?)";
-    private final String SQL_INSERT_LIKED = "insert into \"userFilms\" (user_id, \"filmsLiked\") values (?, ?)";
 
     private final String SQL_UPDATE_WATCHED_ADD = "UPDATE \"userFilms\" SET \"filmsWatched\" = array_append(\"filmsWatched\",?) where user_id=?";
     private final String SQL_UPDATE_WATCHED_REMOVE = "UPDATE \"userFilms\" SET \"filmsWatched\" = array_remove(\"filmsWatched\",?) where user_id=?";
@@ -49,7 +46,7 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
                     Long[] arr = (Long[]) setOfUSers.getArray(1).getArray();
 
                     for (int i = 0; i < arr.length; i++) {
-                        if(!arr[i].equals(id)){
+                        if (!arr[i].equals(id)) {
                             Set<Long> intersect1 = new HashSet<>(getLikedFilms(id));
                             Set<Long> intersect2 = new HashSet<>(getLikedFilms(arr[i]));
                             intersect1.retainAll(intersect2);
@@ -64,6 +61,9 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
 
                     Map.Entry<Long, Float> maxEntry = Collections.max(similarity.entrySet(), Map.Entry.comparingByValue());
                     personalFilms.addAll(getWatchedFilms(maxEntry.getKey()));
+
+                    List<Long> watchedFilms = getWatchedFilms(id);
+                    for (Long i : watchedFilms) personalFilms.remove(i);
                 }
             }
         } catch (SQLException throwables) {
@@ -137,7 +137,7 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
     }
 
     @Override
-    public void updateWatchedFilms(Long user_id, Long film_id) {
+    public boolean updateWatchedFilms(Long user_id, Long film_id) {
         if (getWatchedFilms(user_id).contains(film_id)) {
             Connection connection = null;
             PreparedStatement statement = null;
@@ -152,6 +152,8 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
                 if (affectedRows == 0) {
                     throw new SQLException("Problem with removing");
                 }
+
+                return false;
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
             } finally {
@@ -175,6 +177,8 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
                 if (affectedRows == 0) {
                     throw new SQLException("Problem with adding");
                 }
+
+                return true;
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
             } finally {
@@ -188,7 +192,7 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
     }
 
     @Override
-    public void updateLikedFilms(Long user_id, Long film_id) {
+    public boolean updateLikedFilms(Long user_id, Long film_id) {
         if (getLikedFilms(user_id).contains(film_id)) {
             Connection connection = null;
             PreparedStatement statement = null;
@@ -203,6 +207,8 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
                 if (affectedRows == 0) {
                     throw new SQLException("Problem with removing");
                 }
+
+                return false;
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
             } finally {
@@ -226,6 +232,8 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
                 if (affectedRows == 0) {
                     throw new SQLException("Problem with adding");
                 }
+
+                return true;
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
             } finally {
@@ -239,21 +247,23 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
     }
 
     @Override
-    public void saveLikedFilms(Long user_id, Long film_id) {
+    public boolean saveLikedFilms(Long user_id, Long film_id) {
         if (getLikedFilms(user_id).isEmpty()) {
             Connection connection = null;
             PreparedStatement statement = null;
 
             try {
                 connection = dataSource.getConnection();
-                statement = connection.prepareStatement(SQL_INSERT_LIKED, Statement.RETURN_GENERATED_KEYS);
-                statement.setLong(1, user_id);
-                statement.setArray(2, connection.createArrayOf("bigint", new Long[]{film_id}));
+                statement = connection.prepareStatement(SQL_UPDATE_LIKED_ADD, Statement.RETURN_GENERATED_KEYS);
+                statement.setLong(2, user_id);
+                statement.setLong(1, film_id);
                 int affectedRows = statement.executeUpdate();
 
                 if (affectedRows == 0) {
                     throw new SQLException("Problem with save Film");
                 }
+
+                return true;
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
             } finally {
@@ -263,25 +273,27 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
                 } catch (SQLException throwables) {
                 }
             }
-        } else updateLikedFilms(user_id, film_id);
+        } else return updateLikedFilms(user_id, film_id);
     }
 
     @Override
-    public void saveWatchedFilms(Long user_id, Long film_id) {
+    public boolean saveWatchedFilms(Long user_id, Long film_id) {
         if (getWatchedFilms(user_id).isEmpty()) {
             Connection connection = null;
             PreparedStatement statement = null;
 
             try {
                 connection = dataSource.getConnection();
-                statement = connection.prepareStatement(SQL_INSERT_WATCHED, Statement.RETURN_GENERATED_KEYS);
-                statement.setLong(1, user_id);
-                statement.setArray(2, connection.createArrayOf("bigint", new Long[]{film_id}));
+                statement = connection.prepareStatement(SQL_UPDATE_WATCHED_ADD, Statement.RETURN_GENERATED_KEYS);
+                statement.setLong(2, user_id);
+                statement.setLong(1, film_id);
                 int affectedRows = statement.executeUpdate();
 
                 if (affectedRows == 0) {
                     throw new SQLException("Problem with save Film");
                 }
+
+                return true;
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
             } finally {
@@ -291,7 +303,7 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
                 } catch (SQLException throwables) {
                 }
             }
-        } else updateWatchedFilms(user_id, film_id);
+        } else return updateWatchedFilms(user_id, film_id);
     }
 
     @Override
@@ -342,5 +354,15 @@ public class UserFilmsRepositoryImpl implements UserFilmsRepository {
             } catch (SQLException throwables) {
             }
         }
+    }
+
+    @Override
+    public boolean isFilmWatched(Long user_id, Long film_id) {
+        return getWatchedFilms(user_id).contains(film_id);
+    }
+
+    @Override
+    public boolean isFilmLiked(Long user_id, Long film_id) {
+        return getLikedFilms(user_id).contains(film_id);
     }
 }

@@ -39,24 +39,18 @@ public class SignUpServlet extends HttpServlet {
         SignUpForm form = new SignUpForm();
         form.setUsername(request.getParameter("username"));
         form.setEmail(request.getParameter("email"));
-
         String date = request.getParameter("dateOfBirth");
-        int day = Integer.parseInt(date.split("-")[2]);
-        int month = Integer.parseInt(date.split("-")[1]);
-        int year = Integer.parseInt(date.split("-")[0]);
 
-        form.setDateOfBirth(new Date(year, month, day));
+        form.setDateOfBirth(date);
         form.setPassword(request.getParameter("password"));
 
-        // TODO: разобрать коды ошибок
         Long id = signUpService.signUp(form);
         if (id > 0) {
             HttpSession session = request.getSession();
             session.setAttribute("id", id);
             response.sendRedirect(BASE_CONTEXT + "/profile");
         } else {
-            request.getSession().setAttribute("error", id);
-            response.sendRedirect(BASE_CONTEXT);
+            response.sendRedirect(BASE_CONTEXT + "?error=" + id);
         }
     }
 }

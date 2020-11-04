@@ -27,9 +27,9 @@ public class ClearDataServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long param = Long.parseLong(request.getHeader("clear"));
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        Long param = Long.parseLong(request.getHeader("clear"));
 
         if (param == 0) {
             usersService.deleteUser((Long) request.getSession(false).getAttribute("id"));

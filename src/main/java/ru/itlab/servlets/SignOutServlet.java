@@ -26,6 +26,7 @@ public class SignOutServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         if(request.getSession(false).getAttribute("id") != null){
             request.getSession(false).setAttribute("id", null);
+            request.getSession(false).setAttribute("oauth", null);
         }
         response.sendRedirect(BASE_CONTEXT);
     }

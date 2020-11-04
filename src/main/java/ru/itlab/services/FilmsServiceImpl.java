@@ -201,13 +201,13 @@ public class FilmsServiceImpl implements FilmsService {
     }
 
     @Override
-    public void saveWatchedFilms(Long user_id, Long film_id) {
-        userFilmsRepository.saveWatchedFilms(user_id, film_id);
+    public boolean saveWatchedFilms(Long user_id, Long film_id) {
+        return userFilmsRepository.saveWatchedFilms(user_id, film_id);
     }
 
     @Override
-    public void saveLikedFilms(Long user_id, Long film_id) {
-        userFilmsRepository.saveLikedFilms(user_id, film_id);
+    public boolean saveLikedFilms(Long user_id, Long film_id) {
+        return userFilmsRepository.saveLikedFilms(user_id, film_id);
     }
 
     @Override
@@ -218,6 +218,20 @@ public class FilmsServiceImpl implements FilmsService {
     @Override
     public void deleteLikedFilms(Long user_id) {
         userFilmsRepository.deleteLikedFilms(user_id);
+    }
+
+    @Override
+    public JSONObject isFilmWatched(Long user_id, Long film_id) {
+        JSONObject object = new JSONObject();
+        object.append("watched", userFilmsRepository.isFilmWatched(user_id, film_id));
+        return object;
+    }
+
+    @Override
+    public JSONObject isFilmLiked(Long user_id, Long film_id) {
+        JSONObject object = new JSONObject();
+        object.append("liked", userFilmsRepository.isFilmLiked(user_id, film_id));
+        return object;
     }
 
     private String readAll(Reader rd) throws IOException {

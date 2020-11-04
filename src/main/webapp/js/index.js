@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     let password = document.getElementById("inputPasswordSignUp"),
         confirm_password = document.getElementById("inputPasswordRepeatSignUp"),
-        search = document.getElementById('filmRecommendationFilterSearch');
+        search = document.getElementById('filmRecommendationFilterSearch'),
+        vkauthsignup = document.getElementById('vkauthsignup'),
+        vkauthsignin = document.getElementById('vkauthsignin');
 
     function checkPassword() {
         let check = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             RatingArray.push(RatingFields[i].value);
         }
 
-        let url = window.location.href.split("?")[0] + 'filmRecommendation';
+        let url = window.location.protocol + 'filmRecommendation';
 
         try {
             let response = await fetch(url, {
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
             await generateRecommendationList(JSON.parse(result.split("@")[0]));
             await generateRecommendationResultPersonal(JSON.parse(result.split("@")[1]))
         } catch (e) {
-            alert(e);
+            console.log(e)
         }
     }
 
@@ -90,10 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function generateRecommendationResultPersonal(result){
+    function generateRecommendationResultPersonal(result) {
         let filmRecommendationResultPersonal = document.getElementById('filmRecommendationResultPersonal');
         let html = "";
-        if(filmRecommendationResultPersonal != null){
+        if (filmRecommendationResultPersonal != null) {
             for (let i = 0; i < result.length; i++) {
                 html += '<img src="' + result[i].posterUrl + '" class="rounded mx-3 my-3" alt="' + result[i].filmId + '" data-toggle="modal" data-target="#filmModal">\n';
             }
@@ -108,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function getFilmById() {
         let id = this.alt;
-        let url = window.location.href.split("?")[0] + 'film';
+        let url = window.location.protocol + 'film';
 
         try {
             let response = await fetch(url, {
@@ -119,15 +121,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            let result = await response.json();
-            await generateFilmById(result);
+            let result = await response.text();
+            await generateFilmById(JSON.parse(result.split("@")[0]), JSON.parse(result.split("@")[1]), JSON.parse(result.split("@")[2]));
         } catch (e) {
-            alert(e);
+            console.log(e)
         }
     }
 
-    function generateFilmById(result) {
+    function generateFilmById(result, watched, liked) {
         let filmModal = document.getElementById('filmModal');
+
+        let add;
+
+        if (Object.keys(watched).length !== 0) {
+            add =
+                '            <div class="modal-footer d-flex justify-content-between align-items-center">\n' +
+                '                   <img id="watched" src="' + window.location.protocol + 'img/watched' + watched.watched + '.png" alt="" style="width: 50px;height: 50px;">\n' +
+                '                   <img id="liked" src="' + window.location.protocol + 'img/liked' + liked.liked + '.png" alt="" style="width: 50px;height: 50px;">\n' +
+                '        </div>\n' +
+                '    </div>';
+        } else {
+            add =
+                '            <div class="modal-footer d-flex justify-content-between align-items-center">\n' +
+                '        </div>\n' +
+                '    </div>';
+        }
+
         filmModal.innerHTML = '<div class="modal-dialog">\n' +
             '        <div class="modal-content">\n' +
             '            <div class="modal-header">\n' +
@@ -148,13 +167,62 @@ document.addEventListener('DOMContentLoaded', function () {
             '                        <li class="list-group-item">Страна производства: ' + JSONArrayToString(result.countries, 'country') + '</li>\n' +
             '                        <li class="list-group-item">Жанр: ' + JSONArrayToString(result.genres, 'genre') + '</li>\n' +
             '                    </ul>\n' +
-            '                </div>\n' +
-            '            </div>\n' +
-            '        </div>\n' +
-            '    </div>'
+            '                </div>\n'
+            + add;
+
+        let watchedTmp = document.getElementById('watched');
+        let likedTmp = document.getElementById('liked');
+
+        let filmid = result.filmId;
+
+        if (watchedTmp != null) {
+            watchedTmp.addEventListener('click', async function () {
+                let url = window.location.protocol + 'edit';
+                let watchedTmp = document.getElementById('watched');
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'edit': 1,
+                            'id': filmid
+                        }
+                    });
+
+                    let result = await response.json();
+                    watchedTmp.src = window.location.protocol + "img/watched" + result.res[0] + ".png";
+                } catch (e) {
+                    console.log(e)
+                }
+            }, false);
+        }
+
+        if (likedTmp != null) {
+            likedTmp.addEventListener('click', async function () {
+                let url = window.location.protocol + 'edit';
+                let likedTmp = document.getElementById('liked');
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'edit': 2,
+                            'id': filmid
+                        }
+                    });
+
+                    let result = await response.json();
+                    likedTmp.src = window.location.protocol + "img/liked" + result.res[0] + ".png";
+                } catch (e) {
+                    console.log(e)
+                }
+            }, false);
+        }
     }
 
-    function JSONArrayToString(array, name){
+    function JSONArrayToString(array, name) {
 
         let res = '';
 
@@ -166,10 +234,28 @@ document.addEventListener('DOMContentLoaded', function () {
         return decodeURIComponent(res);
     }
 
+    function VKLog(){
+        try {
+           window.location.href = window.location.protocol + 'vkin';
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    function VKReg(){
+        try {
+            window.location.href = window.location.protocol + 'vkreg';
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     password.addEventListener('keyup', checkPassword, false);
     password.addEventListener('change', validatePassword, false);
     confirm_password.addEventListener('keyup', validatePassword, false);
     search.addEventListener('click', getRecommendationList, false);
 
+    vkauthsignup.addEventListener('click', VKReg, false);
+    vkauthsignin.addEventListener('click', VKLog, false);
     getRecommendationList();
 }, false);

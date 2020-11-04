@@ -19,6 +19,9 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private final String SQL_USER_BY_EMAIL = "select * from users where email=?";
     private final String SQL_DELETE_USER = "delete from users where id=?";
 
+    private final String SQL_INSERT_USERS_FILM = "insert into \"userFilms\" (user_id, \"filmsWatched\", \"filmsLiked\") values (?, '{}', '{}')";
+    private final String SQL_CHANGE_USER_PASSWORD = "update users set hash_password=? where id=?;";
+
     public UsersRepositoryJdbcImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -32,9 +35,17 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getEmail());
-            statement.setDate(3, entity.getDateOfBirth());
+            statement.setString(3, entity.getDateOfBirth());
             statement.setString(4, entity.getHashPassword());
             int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Problem with insert user");
+            }
+
+            statement = connection.prepareStatement(SQL_INSERT_USERS_FILM, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, getUserByEmail(entity.getEmail()).get().getId());
+            affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {
                 throw new SQLException("Problem with insert user");
@@ -76,6 +87,32 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     }
 
     @Override
+    public void changePassword(Long id, String password) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(SQL_CHANGE_USER_PASSWORD, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, password);
+            statement.setLong(2, id);
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Problem with insert user");
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException throwables) {
+            }
+        }
+    }
+
+    @Override
     public List<User> findAll() {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -90,7 +127,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                     User user = User.builder().id(setOfAllUsers.getLong("id"))
                             .username(setOfAllUsers.getString("username"))
                             .email(setOfAllUsers.getString("email"))
-                            .dateOfBirth(setOfAllUsers.getDate("dateOfBirth"))
+                            .dateOfBirth(setOfAllUsers.getString("dateOfBirth"))
                             .hashPassword(setOfAllUsers.getString("hash_password")).build();
                     allUsers.add(user);
                 }
@@ -123,7 +160,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                     User user = User.builder().id(isUserByID.getLong("id"))
                             .username(isUserByID.getString("username"))
                             .email(isUserByID.getString("email"))
-                            .dateOfBirth(isUserByID.getDate("dateOfBirth"))
+                            .dateOfBirth(isUserByID.getString("dateOfBirth"))
                             .hashPassword(isUserByID.getString("hash_password")).build();
                     userByID = Optional.of(user);
                 }
@@ -157,7 +194,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                     User user = User.builder().id(isUserByEmail.getLong("id"))
                             .username(isUserByEmail.getString("username"))
                             .email(isUserByEmail.getString("email"))
-                            .dateOfBirth(isUserByEmail.getDate("dateOfBirth"))
+                            .dateOfBirth(isUserByEmail.getString("dateOfBirth"))
                             .hashPassword(isUserByEmail.getString("hash_password")).build();
                     userByEmail = Optional.of(user);
                 }

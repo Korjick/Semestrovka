@@ -4,11 +4,30 @@ document.addEventListener('DOMContentLoaded', function () {
         likedFilms = document.getElementById('likedFilms'),
         clearLikedFilms = document.getElementById('clearLikedFilms'),
         clearWatchedFilms = document.getElementById('clearWatchedFilms'),
-        changePassword = document.getElementById('changePassword'),
-        clearUser = document.getElementById('clearUser');
+        clearUser = document.getElementById('clearUser'),
+        password = document.getElementById("inputPassword"),
+        confirm_password = document.getElementById("inputPasswordRepeat"),
+        change_password = document.getElementById('changePassword');
+
+    function checkPassword() {
+        let check = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        if (!password.value.match(check)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function validatePassword() {
+        if (password.value !== confirm_password.value) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     async function getData(){
-        let url = window.location.href;
+        let url = window.location.pathname;
 
         try {
             let response = await fetch(url, {
@@ -22,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             await generateWatchedFilms(result);
             await generateLikedFilms(result);
         } catch (e) {
-            alert(e);
+            console.log(e);
         }
     }
 
@@ -64,7 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function getFilmById() {
         let id = this.alt;
-        let url = window.location.href.split("?")[0].substring(0, window.location.href.lastIndexOf('/')) + '/film';
+        let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/film';
+
         try {
             let response = await fetch(url, {
                 method: 'POST',
@@ -74,15 +94,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            let result = await response.json();
-            await generateFilmById(result);
+            let result = await response.text();
+            await generateFilmById(JSON.parse(result.split("@")[0]), JSON.parse(result.split("@")[1]), JSON.parse(result.split("@")[2]));
         } catch (e) {
-            alert(e);
+            console.log(e)
         }
     }
 
-    function generateFilmById(result) {
+    function generateFilmById(result, watched, liked) {
         let filmModal = document.getElementById('filmModal');
+
+        let add;
+        if (Object.keys(watched).length !== 0) {
+            add =
+                '            <div class="modal-footer d-flex justify-content-between align-items-center">\n' +
+                '                   <img id="watched" src="' + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/img/watched' + watched.watched + '.png" alt="" style="width: 50px;height: 50px;">\n' +
+                '                   <img id="liked" src="' + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/img/liked' + liked.liked + '.png" alt="" style="width: 50px;height: 50px;">\n' +
+                '        </div>\n' +
+                '    </div>';
+        } else {
+            add =
+                '            <div class="modal-footer d-flex justify-content-between align-items-center">\n' +
+                '        </div>\n' +
+                '    </div>';
+        }
+
         filmModal.innerHTML = '<div class="modal-dialog">\n' +
             '        <div class="modal-content">\n' +
             '            <div class="modal-header">\n' +
@@ -94,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
             '            </div>\n' +
             '            <div class="modal-body row">\n' +
             '                <div class="col-5">\n' +
-            '                    <img src="' + result.posterUrl + '" alt="" style="width: 175px; height: 250px;">\n' +
+            '                    <img src="' + result.posterUrl + '" alt="" style="height: 250px; width: 175px;">\n' +
             '                </div>\n' +
             '                <div class="col-7">\n' +
             '                    <h5>О фильме</h5>\n' +
@@ -103,14 +139,64 @@ document.addEventListener('DOMContentLoaded', function () {
             '                        <li class="list-group-item">Страна производства: ' + JSONArrayToString(result.countries, 'country') + '</li>\n' +
             '                        <li class="list-group-item">Жанр: ' + JSONArrayToString(result.genres, 'genre') + '</li>\n' +
             '                    </ul>\n' +
-            '                </div>\n' +
-            '            </div>\n' +
-            '        </div>\n' +
-            '    </div>'
+            '                </div>\n'
+            + add;
+
+        let watchedTmp = document.getElementById('watched');
+        let likedTmp = document.getElementById('liked');
+
+        let filmid = result.filmId;
+
+        if (watchedTmp != null) {
+            watchedTmp.addEventListener('click', async function () {
+                let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/edit';
+                let watchedTmp = document.getElementById('watched');
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'edit': 1,
+                            'id': filmid
+                        }
+                    });
+
+                    let result = await response.json();
+                    console.log(result);
+                    watchedTmp.src = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/img/watched" + result.res[0] + ".png";
+                } catch (e) {
+                    console.log(e)
+                }
+            }, false);
+        }
+
+        if (likedTmp != null) {
+            likedTmp.addEventListener('click', async function () {
+                let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/edit';
+                let likedTmp = document.getElementById('liked');
+
+                try {
+                    let response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'edit': 2,
+                            'id': filmid
+                        }
+                    });
+
+                    let result = await response.json();
+                    likedTmp.src = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/img/liked" + result.res[0] + ".png";
+                } catch (e) {
+                    console.log(e)
+                }
+            }, false);
+        }
     }
 
     async function clearWatchedFilmsClick(){
-        let url = window.location.href.split("?")[0].substring(0, window.location.href.lastIndexOf('/')) + '/clear';
+        let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/clear';
         try {
             await fetch(url, {
                 method: 'POST',
@@ -121,12 +207,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             location.reload();
         } catch (e) {
-            alert(e);
+            console.log(e);
         }
     }
 
     async function clearLikedFilmsClick(){
-        let url = window.location.href.split("?")[0].substring(0, window.location.href.lastIndexOf('/')) + '/clear';
+        let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/clear';
         try {
             await fetch(url, {
                 method: 'POST',
@@ -137,12 +223,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             location.reload();
         } catch (e) {
-            alert(e);
+            console.log(e);
         }
     }
 
     async function clearUserClick(){
-        let url = window.location.href.split("?")[0].substring(0, window.location.href.lastIndexOf('/')) + '/clear';
+        let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/clear';
         try {
             await fetch(url, {
                 method: 'POST',
@@ -153,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             location.reload();
         } catch (e) {
-            alert(e);
+            console.log(e);
         }
     }
 
@@ -169,8 +255,37 @@ document.addEventListener('DOMContentLoaded', function () {
         return decodeURIComponent(res);
     }
 
+    async function changePassword(){
+        let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/edit';
+        if(checkPassword()) {
+            if(validatePassword()) {
+                try {
+                    console.log(password.value + "@");
+                    await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                            'edit': 0,
+                            'password': password.value
+                        }
+                    });
+                    location.reload();
+                } catch (e) {
+                    console.log(e);
+                }
+            } else {
+                alert("Пароли не совпадают");
+            }
+        } else {
+            alert("Неправильный формат пароля. " +
+                "Пароль должен состоять от 6 ддо 20 латинских символов, содержать хотя бы одну цифру и одну заглавную букву.");
+        }
+    }
+
     getData();
     clearWatchedFilms.addEventListener('click', clearWatchedFilmsClick, false);
     clearLikedFilms.addEventListener('click', clearLikedFilmsClick, false);
     clearUser.addEventListener('click', clearUserClick, false);
+
+    change_password.addEventListener('click', changePassword, false);
 }, false);

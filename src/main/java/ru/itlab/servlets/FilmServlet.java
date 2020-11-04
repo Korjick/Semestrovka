@@ -1,5 +1,6 @@
 package ru.itlab.servlets;
 
+import org.json.JSONObject;
 import ru.itlab.services.FilmsService;
 
 import javax.servlet.ServletConfig;
@@ -32,7 +33,15 @@ public class FilmServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        out.print(filmsService.getFilmByID(Long.parseLong(request.getHeader("id"))));
+        JSONObject watched = null, liked = null;
+        if(request.getSession(false).getAttribute("id") != null){
+            watched = filmsService.isFilmWatched((Long) request.getSession(false).getAttribute("id"),
+                    Long.parseLong(request.getHeader("id")));
+            liked = filmsService.isFilmLiked((Long) request.getSession(false).getAttribute("id"),
+                    Long.parseLong(request.getHeader("id")));
+        }
+
+        out.print(filmsService.getFilmByID(Long.parseLong(request.getHeader("id"))) + "@" + (watched == null ? "{}" : watched) + "@" + (liked == null ? "{}" : liked));
         out.flush();
     }
 }

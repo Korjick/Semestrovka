@@ -1,10 +1,14 @@
 /* Classes */
 
+* {
+    font-family: 'Didact Gothic', sans-serif;
+}
+
 body{
     margin-top:20px;
     color: black;
     text-align: left;
-    background-color: black;
+    background-color: #0D0D0D;
 }
 .main-body {
     padding: 15px;
@@ -50,6 +54,10 @@ body{
 
 .shadow-none {
     box-shadow: none!important;
+}
+
+.text-light-custom {
+    color: azure;
 }
 
 /* Web-Kit`s */
